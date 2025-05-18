@@ -21,9 +21,9 @@ class DatastoreRepositoryImpl(DatastoreRepository):
     async def get_products(self, page: int, size: int) -> PageOfModel[ProductModel]:
         file = await self.__get_file_from_storage(self.__products_csv_file_path)
 
-        csv_str = file.decode("utf-8")
+        csv_str = file.decode("utf-8-sig")
         csv_file = StringIO(csv_str)
-        reader = csv.DictReader(csv_file)
+        reader = csv.DictReader(csv_file, delimiter=";")
 
         all_rows = list(reader)
         total = len(all_rows)
@@ -55,9 +55,9 @@ class DatastoreRepositoryImpl(DatastoreRepository):
     async def get_categories(self, page: int, size: int) -> PageOfModel[CategoryModel]:
         file = await self.__get_file_from_storage(self.__categories_csv_file_path)
 
-        csv_str = file.decode("utf-8")
+        csv_str = file.decode("utf-8-sig")
         csv_file = StringIO(csv_str)
-        reader = csv.DictReader(csv_file)
+        reader = csv.DictReader(csv_file, delimiter=";")
 
         all_rows = list(reader)
         total = len(all_rows)
